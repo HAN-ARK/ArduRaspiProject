@@ -9,8 +9,9 @@ import sys
 
 def main():
     '''This function manages the mainline logic of the program'''
-
-    HOST = '192.168.0.22' #Available for every interface
+    
+    #HOST = ' ' #Available for every interface
+    HOST = '192.168.0.22'
     PORT = 8888
 
     # 1. Instantiation of the socket class
@@ -24,8 +25,8 @@ def main():
     # 3. Receiving returned values
     return_data = ClientSocket.recv(1024)
     print('result: ' + return_data.decode())
+    
     # 4. Close the ClientSocket
-
     ClientSocket.close()
 
 if __name__ == "__main__":
