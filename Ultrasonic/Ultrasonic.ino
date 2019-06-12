@@ -1,6 +1,6 @@
 int distance;
-int triggerPin = 8;
-int echoPin = 7;
+int triggerPin = 4;
+int echoPin = 3;
 
 void setup() {
   Serial.begin(9600);

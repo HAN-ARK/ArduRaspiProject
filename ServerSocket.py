@@ -9,13 +9,14 @@ import socket
 import time
 import sys
 import i2c_lcd
+import keyboard
 
 
 def main():
     '''This function manages the mainline logic of the program '''
 
 #    HOST = '' # Available for all interaces
-    HOST = '192.168.0.22'
+    HOST = '192.168.0.13'
     PORT = 8888 #PRESET
 
     # 0. Instantiation of the lcd class
@@ -31,38 +32,49 @@ def main():
         SocketServer.bind((HOST, PORT))
     except:
         print("Binding failed")
+        SocketServer.close()
         sys.exit()
 
     print('Socket binding completed')
 
     # 3. Start listening from the client
-    SocketServer.listen(100)
+    SocketServer.listen(1)
     print("Server is waiting for connection")
 
     # 4. Socket starts to communicate
     conn, addr = SocketServer.accept()
     print("Connected with " + addr[0] + ': ' + str(addr[1]))
-    msg = conn.recv(1024)
 
-    # 5. Return the state of the socket
-    conn.sendall("Successfully sent".encode())
+    while True:
+        msg = conn.recv(1024)
+        lcd.lcd_clear()
 
-    # 6. Display
-    encoded_data = msg.decode()
-    if len(encoded_data) <= 16:
-        lcd.lcd_display_string(encoded_data, 1)
-    elif len(encoded_data) > 16:
-        lcd.lcd_display_string(encoded_data[:16], 1)
-        lcd.lcd_display_string(encoded_data[16:], 2)
+        # 5. Return the state of the socket
+        conn.sendall("Successfully sent".encode())
 
-    # 7. Delay and ends the program
-    time.sleep(10)
+        # 6. Display
+        encoded_data = msg.decode()
+        if len(encoded_data) <= 16:
+            lcd.lcd_display_string(encoded_data, 1)
+        elif len(encoded_data) > 16:
+            lcd.lcd_display_string(encoded_data[:16], 1)
+            lcd.lcd_display_string(encoded_data[16:], 2)
+
+        del(msg, encoded_data) #memory management
+
+        try:
+            if keyboard.is_pressed('q'):  # if key 'q' is pressed
+                print('END THE SOCKET SERVER!')
+                break  # finishing the loop
+            else:
+                pass
+
+    # 7. Close the socket
+    conn.close()
+    SocketServer.close()
     lcd.lcd_clear()
     lcd.backlight_on(False)
 
-    # 8. Close the socket
-    conn.close()
-    SocketServer.close()
 
 if __name__ == "__main__":
     main()
