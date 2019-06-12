@@ -41,11 +41,11 @@ def main():
     SocketServer.listen(1)
     print("Server is waiting for connection")
 
-    # 4. Socket starts to communicate
-    conn, addr = SocketServer.accept()
-    print("Connected with " + addr[0] + ': ' + str(addr[1]))
-
     while True:
+        # 4. Socket starts to communicate
+        conn, addr = SocketServer.accept()
+        print("Connected with " + addr[0] + ': ' + str(addr[1]))
+
         msg = conn.recv(1024)
         lcd.lcd_clear()
 
@@ -60,7 +60,7 @@ def main():
             lcd.lcd_display_string(encoded_data[:16], 1)
             lcd.lcd_display_string(encoded_data[16:], 2)
 
-        del(msg, encoded_data) #memory management
+        del(msg, encoded_data) #memory managementexit
 
         try:
             if keyboard.is_pressed('q'):  # if key 'q' is pressed
