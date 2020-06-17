@@ -11,7 +11,7 @@ def main():
     '''This function manages the mainline logic of the program'''
     
     #HOST = ' ' #Available for every interface
-    HOST = '192.168.0.22'
+    HOST = '192.168.0.24'
     PORT = 8888
 
     # 1. Instantiation of the socket class

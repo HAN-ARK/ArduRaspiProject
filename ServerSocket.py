@@ -16,7 +16,7 @@ def main():
     '''This function manages the mainline logic of the program '''
 
 #    HOST = '' # Available for all interaces
-    HOST = '192.168.0.13'
+    HOST = '192.168.0.24'
     PORT = 8888 #PRESET
 
     # 0. Instantiation of the lcd class
@@ -68,6 +68,8 @@ def main():
                 break  # finishing the loop
             else:
                 pass
+        except:
+            pass
 
     # 7. Close the socket
     conn.close()
